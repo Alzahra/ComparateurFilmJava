@@ -1,9 +1,9 @@
 package bdd;
 
-import java.util.Date;
-import java.util.List;
+import java.sql.Date;
 
 public class Film {
+    private final int id;
     private String titre;
     private int duree;
     private float note;
@@ -11,9 +11,10 @@ public class Film {
     private Date dateSortie;
     private String genre; // TODO : je sais plus si on a un seul genre par film ou plusieurs (du coup mettre une list)
     private String synopsis;
-    private List<String> acteurs;
+    private String[] acteurs;
 
-    public Film(String titre, int duree, float note, float prix, Date dateSortie, String genre, String synopsis, List<String> acteurs) {
+    public Film(int id, String titre, int duree, float note, float prix, Date dateSortie, String genre, String synopsis, String[] acteurs) {
+        this.id = id;
         this.titre = titre;
         this.duree = duree;
         this.note = note;
@@ -80,11 +81,11 @@ public class Film {
         this.synopsis = synopsis;
     }
 
-    public List<String> getActeurs() {
+    public String[] getActeurs() {
         return acteurs;
     }
 
-    public void setActeurs(List<String> acteurs) {
+    public void setActeurs(String[] acteurs) {
         this.acteurs = acteurs;
     }
 

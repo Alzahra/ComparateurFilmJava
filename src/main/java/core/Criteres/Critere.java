@@ -1,4 +1,6 @@
-package core;
+package core.Criteres;
+
+import bdd.Film;
 
 /**
  * Je sais pas du tout quoi faire de cette classe...
@@ -11,5 +13,6 @@ package core;
  * - ajouter une spécialisation Critere
  * - ajouter un champ dans LES IHM pour le nouveau criteres...
  */
-public class Critere {
+public abstract class Critere {
+    abstract public int evaluate(Film film);
 }

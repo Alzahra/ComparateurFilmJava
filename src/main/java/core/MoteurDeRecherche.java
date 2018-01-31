@@ -2,8 +2,10 @@ package core;
 
 import bdd.BaseDeDonnee;
 import bdd.Film;
+import core.Criteres.Critere;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class MoteurDeRecherche {
     /**
@@ -12,16 +14,17 @@ public class MoteurDeRecherche {
      * TODO : je sais pas trop quand et comment appeler BDD.modifier etc..
      * En tout cas faut garder cette liste et la BDD synchronisé
      */
-    private List<Film> bddTemporaire;
+    private ArrayList<Film> bddTemporaire;
     private BaseDeDonnee bdd;
     /**
      * Les résultats de la dernière recherche
      */
-    private List<Resultat> resultats;
+    private ArrayList<Resultat> resultats = new ArrayList<>();
 
     // TODO : Pas besoin de passer la BDD en paramètre mais l'instancier direct ?!
     public MoteurDeRecherche(BaseDeDonnee bdd) {
         this.bdd = bdd;
+        bddTemporaire = bdd.getBDD();
     }
 
     /**
@@ -35,7 +38,15 @@ public class MoteurDeRecherche {
      * La list doit être triée.
      * @param criteres
      */
-    public void rechercher(Critere ... criteres) {
-
+    public void rechercher(Critere... criteres) {
+        resultats.clear(); // Nouvelle recherche on supprime l'ancienne
+        for (Film f : bddTemporaire) {
+            int score = 0;
+            for (Critere c : criteres)
+                score += c.evaluate(f);
+            Resultat r = new Resultat(f, score);
+            resultats.add(r);
+        }
+        Collections.sort(resultats);
     }
 }

@@ -5,15 +5,17 @@ import bdd.Film;
 import java.util.Date;
 import java.util.List;
 
-/**
+/*
  * Un Résultat est un film qui a un score et que l'on peut donc comparer
  * par rapport à leur score.
  */
-public class Resultat extends Film implements Comparable<Resultat> {
+public class Resultat implements Comparable<Resultat> {
     private int score;
+    private Film film;
 
-    public Resultat(String titre, int duree, float note, float prix, Date dateSortie, String genre, String synopsis, List<String> acteurs) {
-        super(titre, duree, note, prix, dateSortie, genre, synopsis, acteurs);
+    public Resultat(Film film, int score) {
+        this.film = film;
+        this.score = score;
     }
 
     @Override
