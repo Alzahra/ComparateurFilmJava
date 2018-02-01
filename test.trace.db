@@ -21,3 +21,78 @@ CREATE TABLE IF NOT EXISTS utilisateurs (id INT AUTO_INCREMENT (0, 1) PRIMARY KE
 	at bdd.BaseDeDonnee.createTables(BaseDeDonnee.java:49)
 	at bdd.BaseDeDonnee.<init>(BaseDeDonnee.java:22)
 	at bdd.BaseDeDonnee.main(BaseDeDonnee.java:102)
+2018-02-01 11:28:14 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Column "PRIX" not found; SQL statement:
+INSERT INTO films (titre,duree,note,prix,date_sortie,genres,synopsis,acteurs) values (?,?,?,?,?,?,?,?); [42122-196]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.table.Table.getColumn(Table.java:680)
+	at org.h2.command.Parser.parseColumn(Parser.java:887)
+	at org.h2.command.Parser.parseColumnList(Parser.java:871)
+	at org.h2.command.Parser.parseInsert(Parser.java:1071)
+	at org.h2.command.Parser.parsePrepared(Parser.java:417)
+	at org.h2.command.Parser.parse(Parser.java:321)
+	at org.h2.command.Parser.parse(Parser.java:293)
+	at org.h2.command.Parser.prepareCommand(Parser.java:258)
+	at org.h2.engine.Session.prepareLocal(Session.java:578)
+	at org.h2.engine.Session.prepareCommand(Session.java:519)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1204)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:73)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:288)
+	at bdd.BaseDeDonnee.ajouter(BaseDeDonnee.java:85)
+	at bdd.BaseDeDonnee.main(BaseDeDonnee.java:187)
+2018-02-01 11:29:47 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS FILMS (ID INT AUTO_INCREMENT (0, 1) PRIMARY KEY,TITRE VARCHAR(255) NOT NULL UNIQUE,DUREE TINYINT NOT NULL,NOTE DECIMAL NOT NULL,PRIX DECIMAL NOT NULLDATE_SORTIE[*] DATE NOT NULL,GENRES VARCHAR(15) NOT NULL,SYNOPSIS VARCHAR(1500) NOT NULL,ACTEURS VARCHAR(300) NOT NULL); "; expected "NULL"; SQL statement:
+CREATE TABLE IF NOT EXISTS films (id INT AUTO_INCREMENT (0, 1) PRIMARY KEY,titre VARCHAR(255) NOT NULL UNIQUE,duree TINYINT NOT NULL,note DECIMAL NOT NULL,prix DECIMAL NOT NULLdate_sortie DATE NOT NULL,genres VARCHAR(15) NOT NULL,synopsis VARCHAR(1500) NOT NULL,acteurs VARCHAR(300) NOT NULL); [42001-196]
+2018-02-01 11:29:47 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Column "PRIX" not found; SQL statement:
+INSERT INTO films (titre,duree,note,prix,date_sortie,genres,synopsis,acteurs) values (?,?,?,?,?,?,?,?); [42122-196]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.table.Table.getColumn(Table.java:680)
+	at org.h2.command.Parser.parseColumn(Parser.java:887)
+	at org.h2.command.Parser.parseColumnList(Parser.java:871)
+	at org.h2.command.Parser.parseInsert(Parser.java:1071)
+	at org.h2.command.Parser.parsePrepared(Parser.java:417)
+	at org.h2.command.Parser.parse(Parser.java:321)
+	at org.h2.command.Parser.parse(Parser.java:293)
+	at org.h2.command.Parser.prepareCommand(Parser.java:258)
+	at org.h2.engine.Session.prepareLocal(Session.java:578)
+	at org.h2.engine.Session.prepareCommand(Session.java:519)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1204)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:73)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:288)
+	at bdd.BaseDeDonnee.ajouter(BaseDeDonnee.java:86)
+	at bdd.BaseDeDonnee.main(BaseDeDonnee.java:188)
+2018-02-01 11:30:11 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Column "PRIX" not found; SQL statement:
+INSERT INTO films (titre,duree,note,prix,date_sortie,genres,synopsis,acteurs) values (?,?,?,?,?,?,?,?); [42122-196]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.table.Table.getColumn(Table.java:680)
+	at org.h2.command.Parser.parseColumn(Parser.java:887)
+	at org.h2.command.Parser.parseColumnList(Parser.java:871)
+	at org.h2.command.Parser.parseInsert(Parser.java:1071)
+	at org.h2.command.Parser.parsePrepared(Parser.java:417)
+	at org.h2.command.Parser.parse(Parser.java:321)
+	at org.h2.command.Parser.parse(Parser.java:293)
+	at org.h2.command.Parser.prepareCommand(Parser.java:258)
+	at org.h2.engine.Session.prepareLocal(Session.java:578)
+	at org.h2.engine.Session.prepareCommand(Session.java:519)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1204)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:73)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:288)
+	at bdd.BaseDeDonnee.ajouter(BaseDeDonnee.java:86)
+	at bdd.BaseDeDonnee.main(BaseDeDonnee.java:188)
+2018-02-01 11:31:29 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Numeric value out of range: "160"; SQL statement:
+INSERT INTO films (titre,duree,note,prix,date_sortie,genres,synopsis,acteurs) values (?,?,?,?,?,?,?,?) -- (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8) [22003-196]
+2018-02-01 11:35:57 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Numeric value out of range: "160"; SQL statement:
+INSERT INTO films (titre,duree,note,prix,date_sortie,genres,synopsis,acteurs) values (?,?,?,?,?,?,?,?) -- (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8) [22003-196]
+2018-02-01 11:36:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Numeric value out of range: "160"; SQL statement:
+INSERT INTO films (titre,duree,note,prix,date_sortie,genres,synopsis,acteurs) values (?,?,?,?,?,?,?,?) -- (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8) [22003-196]

@@ -1,6 +1,7 @@
 package bdd;
 
 import java.sql.Date;
+import java.util.Arrays;
 
 public class Film {
     private final int id;
@@ -99,6 +100,16 @@ public class Film {
 
     @Override
     public String toString() {
-        return titre;
+        return "Film{" +
+                "id=" + id +
+                ", titre='" + titre + '\'' +
+                ", duree=" + duree +
+                ", note=" + note +
+                ", prix=" + prix +
+                ", dateSortie=" + dateSortie +
+                ", genre='" + genre + '\'' +
+                ", synopsis='" + synopsis + '\'' +
+                ", acteurs=" + Arrays.toString(acteurs) +
+                '}';
     }
 }

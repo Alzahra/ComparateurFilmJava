@@ -38,11 +38,13 @@ public class BaseDeDonnee {
 
 		try {
 			Statement statement = bdd.createStatement();
+			statement.execute("DROP TABLE IF EXISTS films, utilisateurs;");
 			statement.execute("CREATE TABLE IF NOT EXISTS films (" +
 					"id INT AUTO_INCREMENT (0, 1) PRIMARY KEY," +
 					"titre VARCHAR(255) NOT NULL UNIQUE," +
-					"duree TINYINT NOT NULL," +
+					"duree SMALLINT NOT NULL," +
 					"note DECIMAL NOT NULL," +
+					"prix DECIMAL NOT NULL," +
 					"date_sortie DATE NOT NULL," +
 					"genres VARCHAR(15) NOT NULL," +
 					"synopsis VARCHAR(1500) NOT NULL," +
@@ -81,7 +83,36 @@ public class BaseDeDonnee {
 	}
 
 	public void ajouter(Film film) {
+		try {
+			PreparedStatement pst = bdd.prepareStatement("INSERT INTO films (" +
+					"titre," +
+					"duree," +
+					"note," +
+					"prix," +
+					"date_sortie," +
+					"genres," +
+					"synopsis," +
+					"acteurs" +
+					") values (?,?,?,?,?,?,?,?);");
+			pst.setString(1, film.getTitre());
+			pst.setInt(2, film.getDuree());
+			pst.setBigDecimal(3, BigDecimal.valueOf(film.getNote()));
+			pst.setBigDecimal(4, BigDecimal.valueOf(film.getPrix()));
+			pst.setDate(5, film.getDateSortie());
+			pst.setString(6, film.getGenre());
+			pst.setString(7, film.getSynopsis());
 
+			StringBuilder st = new StringBuilder();
+			for (String s : film.getActeurs()) {
+				st.append(s);
+				st.append(";");
+			}
+			pst.setString(8, st.toString());
+			pst.executeUpdate();
+			pst.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void modifier(Utilisateur user) {
@@ -114,6 +145,8 @@ public class BaseDeDonnee {
 				st.append(";");
 			}
 			pst.setString(8, st.toString());
+			pst.executeUpdate();
+			pst.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -144,6 +177,7 @@ public class BaseDeDonnee {
 						set.getString("acteurs").split(";"));
 				films.add(film);
 			}
+			set.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -152,5 +186,11 @@ public class BaseDeDonnee {
 
 	static public void main(String[] args) {
 		BaseDeDonnee baseDeDonnee = new BaseDeDonnee();
+		baseDeDonnee.ajouter(new Film(1, "Mr Bean", 160, 7.8f, 20, new Date(Date.valueOf("1994-6-10").getTime()),
+				"drole", "Mr bean par en vacs :D", new String[]{"Le magnifique", "lul"}));
+
+
+		for (Film f : baseDeDonnee.getBDD())
+			System.out.println(f);
 	}
 }
