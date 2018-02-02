@@ -96,3 +96,6 @@ INSERT INTO films (titre,duree,note,prix,date_sortie,genres,synopsis,acteurs) va
 2018-02-01 11:36:06 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLException: Numeric value out of range: "160"; SQL statement:
 INSERT INTO films (titre,duree,note,prix,date_sortie,genres,synopsis,acteurs) values (?,?,?,?,?,?,?,?) -- (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8) [22003-196]
+2018-02-02 14:20:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS UTILISATEURS (ID INT AUTO_INCREMENT (0, 1) PRIMARY KEY,NOM VARCHAR(35) NOT NULL,PRENOM VARCHAR(35) NOT NULL,PSEUDO VARCHAR(35) NOT NULL UNIQUE,EMAIL VARCHAR(35) NOT NULL UNIQUE,FILMS_LOUE VARCHAR(1000),SOLDE DECIMAL NOT NULL,ROLE VARCHAR(6) NOT NULLPWD[*] VARCHAR(256) NOT NULL) ; "; expected "NULL"; SQL statement:
+CREATE TABLE IF NOT EXISTS utilisateurs (id INT AUTO_INCREMENT (0, 1) PRIMARY KEY,nom VARCHAR(35) NOT NULL,prenom VARCHAR(35) NOT NULL,pseudo VARCHAR(35) NOT NULL UNIQUE,email VARCHAR(35) NOT NULL UNIQUE,films_loue VARCHAR(1000),solde DECIMAL NOT NULL,role VARCHAR(6) NOT NULLpwd VARCHAR(256) NOT NULL) ; [42001-196]

@@ -1,22 +1,25 @@
 package bdd;
 
-import java.util.List;
-
 public class Utilisateur {
-    enum Role { USER, ADMIN }
 
+    final private int id;
     private String pseudo;
     private String nom;
     private String prenom;
     private String email;
-    private Role role;
+    private String role;
 
-    public Utilisateur(String pseudo, String nom, String prenom, String email, Role role) {
+    public Utilisateur(int id, String pseudo, String nom, String prenom, String email, String role) {
+        this.id = id;
         this.pseudo = pseudo;
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.role = role;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getPseudo() {
@@ -51,17 +54,23 @@ public class Utilisateur {
         this.email = email;
     }
 
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
     }
 
     @Override
     public String toString() {
-        return pseudo;
+        return "Utilisateur{" +
+                "pseudo='" + pseudo + '\'' +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
+                '}';
     }
 
     @Override

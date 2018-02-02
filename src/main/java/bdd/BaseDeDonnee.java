@@ -1,9 +1,9 @@
 package bdd;
 
+import java.io.*;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * TODO : mettre a jour les expirations de location de film (à chaque lancement ?)
@@ -20,7 +20,7 @@ public class BaseDeDonnee {
 			 * TODO : voir le chiffrement de la BDD (simple option normalement)
 			 */
 			bdd = DriverManager.getConnection("jdbc:h2:./test", "sa", "");
-			createTables();
+			createTables(null, null);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -29,16 +29,19 @@ public class BaseDeDonnee {
 		}
 	}
 
-	/**
-	 * Va créer les tables Utilisateur et Film si besoin
-	 */
-	public void createTables() {
+
+	public void createTables(String csvFilm, String csvUser) {
 		/* On vérifie que les tables ne sont pas déjà créés. */
 		/* On crée les tables. */
+		String films = "", users = "";
+		if (csvFilm != null && csvUser != null) {
+			films = "as select * from CSVREAD('"+csvFilm+"', null, 'rowseparator=|')";
+			users = "as select * from CSVREAD('"+csvUser+"', null, 'rowseparator=|')";
+		}
 
 		try {
 			Statement statement = bdd.createStatement();
-			statement.execute("DROP TABLE IF EXISTS films, utilisateurs;");
+			deleteAll();
 			statement.execute("CREATE TABLE IF NOT EXISTS films (" +
 					"id INT AUTO_INCREMENT (0, 1) PRIMARY KEY," +
 					"titre VARCHAR(255) NOT NULL UNIQUE," +
@@ -49,7 +52,7 @@ public class BaseDeDonnee {
 					"genres VARCHAR(15) NOT NULL," +
 					"synopsis VARCHAR(1500) NOT NULL," +
 					"acteurs VARCHAR(300) NOT NULL" +
-					");");
+					") "+ films +";");
 			statement.execute("CREATE TABLE IF NOT EXISTS utilisateurs (" +
 					"id INT AUTO_INCREMENT (0, 1) PRIMARY KEY," +
 					"nom VARCHAR(35) NOT NULL," +
@@ -58,8 +61,9 @@ public class BaseDeDonnee {
 					"email VARCHAR(35) NOT NULL UNIQUE," +
 					"films_loue VARCHAR(1000)," +
 					"solde DECIMAL NOT NULL," +
-					"role VARCHAR(6) NOT NULL" +
-					");");
+					"role VARCHAR(6) NOT NULL," +
+					"pwd VARCHAR(256) NOT NULL" +
+					") " + users +";");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -78,8 +82,32 @@ public class BaseDeDonnee {
 	 *
 	 * Doit provoquer une erreur/exception lorsque le speudo est déjà utilisé.
 	 */
-	public void ajouter(Utilisateur user) {
-
+	public void ajouter(Utilisateur user, String pwd) {
+		try {
+			PreparedStatement pst = bdd.prepareStatement("INSERT INTO utilisateurs (" +
+					"nom," +
+					"prenom," +
+					"pseudo," +
+					"email," +
+					"solde," +
+					"role," +
+					"pwd" +
+					") values (?,?,?,?,?,?,?);");
+			pst.setString(1, user.getNom());
+			pst.setString(2, user.getPrenom());
+			pst.setString(3, user.getPseudo());
+			pst.setString(4, user.getEmail());
+			if (user.getRole().equals("user"))
+				pst.setBigDecimal(5, BigDecimal.valueOf(((Client) user).getSolde()));
+			else
+				pst.setBigDecimal(5, BigDecimal.valueOf(0));
+			pst.setString(6, user.getRole());
+			pst.setString(7, pwd);
+			pst.executeUpdate();
+			pst.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void ajouter(Film film) {
@@ -115,8 +143,38 @@ public class BaseDeDonnee {
 		}
 	}
 
-	public void modifier(Utilisateur user) {
-
+	public void modifier(Utilisateur user, String pwd) {
+		try {
+			PreparedStatement pst = bdd.prepareStatement("UPDATE utilisateurs" +
+					"SET nom=?," +
+					"prenom=?," +
+					"pseudo=?," +
+					"email=?," +
+					"solde=?," +
+					"role=?," +
+					"films_loue=?," +
+					"pwd=?" +
+					"WHERE id = ?;");
+			pst.setString(1, user.getNom());
+			pst.setString(2, user.getPrenom());
+			pst.setString(3, user.getPseudo());
+			pst.setString(4, user.getEmail());
+			if (user.getRole().equals("user")) {
+				pst.setBigDecimal(5, BigDecimal.valueOf(((Client) user).getSolde()));
+				pst.setString(7, Client.formatFilmsForBDD((Client)user));
+			}
+			else {
+				pst.setBigDecimal(5, BigDecimal.valueOf(0));
+				pst.setString(7, "");
+			}
+			pst.setString(6, user.getRole());
+			pst.setString(8, pwd);
+			pst.setInt(9, user.getId());
+			pst.executeUpdate();
+			pst.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void modifier(Film film) {
@@ -153,14 +211,30 @@ public class BaseDeDonnee {
 	}
 
 	public void supprimer(Utilisateur user) {
-
+		try {
+			PreparedStatement pst = bdd.prepareStatement("DELETE FROM utilisateurs" +
+					"WHERE id=?;");
+			pst.setInt(1, user.getId());
+			pst.executeUpdate();
+			pst.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void supprimer(Film film) {
-
+		try {
+			PreparedStatement pst = bdd.prepareStatement("DELETE FROM films" +
+					"WHERE id=?;");
+			pst.setInt(1, film.getId());
+			pst.executeUpdate();
+			pst.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public ArrayList<Film> getBDD() {
+	public ArrayList<Film> getFilms() {
 		ArrayList<Film> films = new ArrayList<>();
 
 		try {
@@ -184,13 +258,79 @@ public class BaseDeDonnee {
 		return films;
 	}
 
+
+	public Film getFilm(String titre) {
+		Film film = null;
+		try {
+			PreparedStatement pst = bdd.prepareStatement("SELECT * FROM films WHERE titre = ?");
+			pst.setString(1, titre);
+			ResultSet set = pst.executeQuery();
+			while (set.next()) {
+				film = new Film(set.getInt("id"),
+					set.getString("titre"),
+					set.getInt("duree"),
+					set.getInt("note"),
+					set.getBigDecimal("prix").floatValue(),
+					set.getDate("date_sortie"),
+					set.getString("genres"),
+					set.getString("synopsis"),
+					set.getString("acteurs").split(";"));
+			}
+			set.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return film;
+	}
+
+	/**
+	 *
+	 * @param pseudo
+	 * @param pwd
+	 * @return null si pas le bon login
+	 */
+	public Utilisateur getUser(String pseudo, String pwd) {
+		Utilisateur user = null;
+		try {
+			PreparedStatement pst = bdd.prepareStatement("SELECT * FROM utilisateurs WHERE pseudo = ?;");
+			pst.setString(1, pseudo);
+			ResultSet set = pst.executeQuery();
+			if (set.next()) {
+				if (set.getString("role").equals("user")) {
+					user = new Client(set.getInt("id"),
+							pseudo, set.getString("nom"), set.getString("prenom"),
+							set.getString("email"), set.getString("role"),
+							set.getBigDecimal("solde").floatValue(), Client.formatFilmsForClient(set.getString("films_loue"), this));
+				} else {
+					user = new Utilisateur(set.getInt("id"),
+							pseudo, set.getString("nom"), set.getString("prenom"),
+							set.getString("email"), set.getString("role"));
+				}
+			}
+			set.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return user;
+	}
+
+	public void deleteAll() {
+		Statement statement = null;
+		try {
+			statement = bdd.createStatement();
+			statement.execute("DROP TABLE IF EXISTS films, utilisateurs;");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	static public void main(String[] args) {
 		BaseDeDonnee baseDeDonnee = new BaseDeDonnee();
 		baseDeDonnee.ajouter(new Film(1, "Mr Bean", 160, 7.8f, 20, new Date(Date.valueOf("1994-6-10").getTime()),
 				"drole", "Mr bean par en vacs :D", new String[]{"Le magnifique", "lul"}));
 
 
-		for (Film f : baseDeDonnee.getBDD())
+		for (Film f : baseDeDonnee.getFilms())
 			System.out.println(f);
 	}
 }

@@ -18,6 +18,14 @@ public class Resultat implements Comparable<Resultat> {
         this.score = score;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public Film getFilm() {
+        return film;
+    }
+
     @Override
     public int compareTo(Resultat o) {
         if (score > o.score) return 1;

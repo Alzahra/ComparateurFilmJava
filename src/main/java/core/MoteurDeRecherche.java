@@ -24,7 +24,7 @@ public class MoteurDeRecherche {
     // TODO : Pas besoin de passer la BDD en paramètre mais l'instancier direct ?!
     public MoteurDeRecherche(BaseDeDonnee bdd) {
         this.bdd = bdd;
-        bddTemporaire = bdd.getBDD();
+        bddTemporaire = bdd.getFilms();
     }
 
     /**

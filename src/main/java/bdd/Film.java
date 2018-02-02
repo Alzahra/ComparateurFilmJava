@@ -26,6 +26,8 @@ public class Film {
         this.acteurs = acteurs;
     }
 
+    public int getId() { return id; }
+
     public String getTitre() {
         return titre;
     }
