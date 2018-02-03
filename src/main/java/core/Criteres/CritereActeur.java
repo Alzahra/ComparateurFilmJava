@@ -13,7 +13,15 @@ public class CritereActeur extends Critere {
     public int evaluate(Film film) {
         // Faudrait boucler sur chaque liste, et dès que l'on a un match on ajoute au score
         // Faut 2 boucles
-        if (acteurFilm.equals(film.getActeurs())) return 100;
-        return 0;
+        int score = 0;
+        for (String s : acteurFilm) {
+            for (String ss : film.getActeurs()) {
+                if (s.equals(ss))
+                    score += 50;
+            }
+        }
+        if (score == 0)
+            return -30;
+        return 50;
     }
 }

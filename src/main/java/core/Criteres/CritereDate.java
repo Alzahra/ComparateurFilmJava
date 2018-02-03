@@ -14,6 +14,6 @@ public class CritereDate extends Critere {
     @Override 
     public int evaluate(Film film) {
         if (dateFilm.equals(film.getDateSortie())) return 20;
-        return 0;//-40
+        return -40;
     }
 }

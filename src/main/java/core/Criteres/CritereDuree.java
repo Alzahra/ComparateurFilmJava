@@ -12,6 +12,6 @@ public class CritereDuree extends Critere {
     @Override //fait on un intervalle de duree
     public int evaluate(Film film) {
         if (film.getDuree() == dureeFilm) return 20;
-        return 0;//-20
+        return -20;
     }
 }

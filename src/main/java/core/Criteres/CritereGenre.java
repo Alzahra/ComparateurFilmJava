@@ -13,6 +13,6 @@ public class CritereGenre extends Critere {
     @Override
     public int evaluate(Film film) {
         if (genreFilm.equals(film.getGenre())) return 60;
-        return 0; //-50
+        return -50;
     }
 }

@@ -11,7 +11,7 @@ public class CriterePrix extends Critere {
     @Override
     public int evaluate(Film film) {
         if (film.getPrix() == prixFilm) return 50;
-        return 0;//-30
+        return -30;
     }
 
 }

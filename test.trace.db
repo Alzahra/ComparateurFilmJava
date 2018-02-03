@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS utilisateurs (id INT AUTO_INCREMENT (0, 1) PRIMARY KE
 	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:73)
 	at org.h2.jdbc.JdbcCallableStatement.<init>(JdbcCallableStatement.java:51)
 	at org.h2.jdbc.JdbcConnection.prepareCall(JdbcConnection.java:912)
-	at bdd.BaseDeDonnee.createTables(BaseDeDonnee.java:49)
+	at createTable(BaseDeDonnee.java:49)
 	at bdd.BaseDeDonnee.<init>(BaseDeDonnee.java:22)
 	at bdd.BaseDeDonnee.main(BaseDeDonnee.java:102)
 2018-02-01 11:28:14 jdbc[3]: exception
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS films (id INT AUTO_INCREMENT (0, 1) PRIMARY KEY,titre
 	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1204)
 	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:176)
 	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:164)
-	at bdd.BaseDeDonnee.createTables(BaseDeDonnee.java:45)
+	at createTable(BaseDeDonnee.java:45)
 	at bdd.BaseDeDonnee.main(BaseDeDonnee.java:331)
 2018-02-02 15:11:08 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLException: Table "FILMS" not found; SQL statement:
@@ -158,7 +158,7 @@ CREATE TABLE IF NOT EXISTS films (id INT AUTO_INCREMENT (0, 1) PRIMARY KEY,titre
 	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1204)
 	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:176)
 	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:164)
-	at bdd.BaseDeDonnee.createTables(BaseDeDonnee.java:45)
+	at createTable(BaseDeDonnee.java:45)
 	at bdd.BaseDeDonnee.main(BaseDeDonnee.java:331)
 2018-02-02 15:12:58 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLException: Table "FILMS" not found; SQL statement:
@@ -175,7 +175,7 @@ CREATE TABLE IF NOT EXISTS films (id INT AUTO_INCREMENT (0, 1) PRIMARY KEY,titre
 	at org.h2.command.Command.executeUpdate(Command.java:260)
 	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:192)
 	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:164)
-	at bdd.BaseDeDonnee.createTables(BaseDeDonnee.java:45)
+	at createTable(BaseDeDonnee.java:45)
 	at bdd.BaseDeDonnee.main(BaseDeDonnee.java:331)
 2018-02-02 15:14:26 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLException: Table "FILMS" not found; SQL statement:
@@ -192,7 +192,7 @@ CREATE TABLE IF NOT EXISTS films (id INT AUTO_INCREMENT (0, 1) PRIMARY KEY,titre
 	at org.h2.command.Command.executeUpdate(Command.java:260)
 	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:192)
 	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:164)
-	at bdd.BaseDeDonnee.createTables(BaseDeDonnee.java:45)
+	at createTable(BaseDeDonnee.java:45)
 	at bdd.BaseDeDonnee.main(BaseDeDonnee.java:331)
 2018-02-02 15:16:01 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLException: Table "FILMS" not found; SQL statement:
@@ -209,7 +209,7 @@ CREATE TABLE IF NOT EXISTS films (id INT AUTO_INCREMENT (0, 1) PRIMARY KEY,titre
 	at org.h2.command.Command.executeUpdate(Command.java:260)
 	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:192)
 	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:164)
-	at bdd.BaseDeDonnee.createTables(BaseDeDonnee.java:45)
+	at createTable(BaseDeDonnee.java:45)
 	at bdd.BaseDeDonnee.main(BaseDeDonnee.java:331)
 2018-02-02 15:25:06 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLException: Table "FILMS" not found; SQL statement:
@@ -226,7 +226,7 @@ CREATE TABLE IF NOT EXISTS films (id INT AUTO_INCREMENT (0, 1) PRIMARY KEY,titre
 	at org.h2.command.Command.executeUpdate(Command.java:260)
 	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:192)
 	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:164)
-	at bdd.BaseDeDonnee.createTables(BaseDeDonnee.java:45)
+	at createTable(BaseDeDonnee.java:45)
 	at bdd.BaseDeDonnee.main(BaseDeDonnee.java:331)
 2018-02-02 15:25:33 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLException: Table "FILMS" not found; SQL statement:
@@ -243,7 +243,7 @@ CREATE TABLE IF NOT EXISTS utilisateurs (id INT AUTO_INCREMENT (0, 1) PRIMARY KE
 	at org.h2.command.Command.executeUpdate(Command.java:260)
 	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:192)
 	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:164)
-	at bdd.BaseDeDonnee.createTables(BaseDeDonnee.java:56)
+	at createTable(BaseDeDonnee.java:56)
 	at bdd.BaseDeDonnee.main(BaseDeDonnee.java:331)
 2018-02-02 15:26:35 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLException: Table "FILMS" not found; SQL statement:

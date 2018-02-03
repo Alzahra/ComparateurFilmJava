@@ -24,7 +24,7 @@ public class MoteurDeRecherche {
     // TODO : Pas besoin de passer la BDD en paramètre mais l'instancier direct ?!
     public MoteurDeRecherche(BaseDeDonnee bdd) {
         this.bdd = bdd;
-        bddTemporaire = bdd.getFilms();
+        //bddTemporaire = bdd.getFilms(); // TODO : corriger ca
     }
 
     /**
@@ -37,8 +37,9 @@ public class MoteurDeRecherche {
      * Pour cela il va calculer les scores un à un.
      * La list doit être triée.
      * @param criteres
+     * @return les résultat par ordre décroissant
      */
-    public void rechercher(Critere... criteres) {
+    public ArrayList<Resultat> rechercher(Critere... criteres) {
         resultats.clear(); // Nouvelle recherche on supprime l'ancienne
         for (Film f : bddTemporaire) {
             int score = 0;
@@ -47,6 +48,8 @@ public class MoteurDeRecherche {
             Resultat r = new Resultat(f, score);
             resultats.add(r);
         }
-        Collections.sort(resultats);
+        // Cherche à avoir le plus gros score en premier
+        Collections.sort(resultats, Collections.reverseOrder());
+        return resultats;
     }
 }

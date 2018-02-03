@@ -18,14 +18,28 @@ public class Resultat implements Comparable<Resultat> {
         this.score = score;
     }
 
+    /**
+     * Retourne le score qu'a obtenu un résultat suite à sa comparaison
+     * avec des critères
+     * @return
+     */
     public int getScore() {
         return score;
     }
 
+    /**
+     * Retourne le film attaché au score
+     * @return
+     */
     public Film getFilm() {
         return film;
     }
 
+    /**
+     * Permet de classer les résultat par leur score
+     * @param o
+     * @return
+     */
     @Override
     public int compareTo(Resultat o) {
         if (score > o.score) return 1;
