@@ -1,5 +1,7 @@
 package bdd;
 
+import org.h2.tools.Csv;
+
 import java.io.*;
 import java.math.BigDecimal;
 import java.sql.*;
@@ -20,7 +22,7 @@ public class BaseDeDonnee {
 			 * TODO : voir le chiffrement de la BDD (simple option normalement)
 			 */
 			bdd = DriverManager.getConnection("jdbc:h2:./test", "sa", "");
-			createTables(null, null);
+			//createTables(null, null);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -34,10 +36,10 @@ public class BaseDeDonnee {
 		/* On vérifie que les tables ne sont pas déjà créés. */
 		/* On crée les tables. */
 		String films = "", users = "";
-		if (csvFilm != null && csvUser != null) {
-			films = "as select * from CSVREAD('"+csvFilm+"', null, 'rowseparator=|')";
-			users = "as select * from CSVREAD('"+csvUser+"', null, 'rowseparator=|')";
-		}
+		/*if (csvFilm != null && csvUser != null) {
+			films = "as select * from CSVREAD('"+csvFilm+"', null, 'fieldSeparator=|')";
+			users = "as select * from CSVREAD('"+csvUser+"', null, 'fieldSeparator=|')";
+		} */
 
 		try {
 			Statement statement = bdd.createStatement();
@@ -314,6 +316,27 @@ public class BaseDeDonnee {
 		return user;
 	}
 
+	public void addFromCSV(String path, String table) {
+		try{
+			Csv csv = new Csv();
+			csv.setFieldSeparatorRead('|');
+			csv.setCaseSensitiveColumnNames(true);
+			ResultSet rs = csv.read(path, null, null);
+			ResultSetMetaData meta = rs.getMetaData();
+			while (rs.next()) {
+				for (int i = 0; i < meta.getColumnCount(); i++) {
+					System.out.println(
+							meta.getColumnLabel(i + 1) + ": " +
+									rs.getString(i + 1));
+				}
+				System.out.println();
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void deleteAll() {
 		Statement statement = null;
 		try {
@@ -324,11 +347,21 @@ public class BaseDeDonnee {
 		}
 	}
 
+	public void execute(String action) {
+		try {
+			Statement statement = bdd.createStatement();
+			statement.execute(action);
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	static public void main(String[] args) {
 		BaseDeDonnee baseDeDonnee = new BaseDeDonnee();
-		baseDeDonnee.ajouter(new Film(1, "Mr Bean", 160, 7.8f, 20, new Date(Date.valueOf("1994-6-10").getTime()),
-				"drole", "Mr bean par en vacs :D", new String[]{"Le magnifique", "lul"}));
-
+		//baseDeDonnee.ajouter(new Film(1, "Mr Bean", 160, 7.8f, 20, new Date(Date.valueOf("1994-6-10").getTime()),
+		//		"drole", "Mr bean par en vacs :D", new String[]{"Le magnifique", "lul"}));
+		baseDeDonnee.createTables(null, null);
 
 		for (Film f : baseDeDonnee.getFilms())
 			System.out.println(f);
