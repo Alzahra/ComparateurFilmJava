@@ -2,7 +2,10 @@ package core;
 
 import bdd.BaseDeDonnee;
 import bdd.Film;
+import bdd.TableFilms;
+import bdd.TableUtilisateurs;
 import core.Criteres.Critere;
+import ihm.main.Principale;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,10 +31,7 @@ public class MoteurDeRecherche {
     }
 
     /**
-     * Va simplement mettre à jour la liste des résultats.
-     * TODO : je ne sais pas si c'est utile de la renvoyer aussi (évite de passer par un getResultats())
-     *
-     * C'est encore un peu le bordel, je sais pas trop comment lier les critères aux caractèristiques d'un film.
+     * Met à jour la liste des résultats et la renvoie.
      *
      * Cette fonction va instancier des résultats dans sa list resultats.
      * Pour cela il va calculer les scores un à un.
@@ -51,5 +51,17 @@ public class MoteurDeRecherche {
         // Cherche à avoir le plus gros score en premier
         Collections.sort(resultats, Collections.reverseOrder());
         return resultats;
+    }
+
+    public static void main(String[] args) {
+        BaseDeDonnee bdd = BaseDeDonnee.getInstance();
+        TableFilms tf = TableFilms.getInstance();
+        TableUtilisateurs tu = TableUtilisateurs.getInstance();
+
+        bdd.createTable(tf, null);
+        bdd.createTable(tu, null);
+
+        Principale fenPrincipale = new Principale("Comparateur Film");
+        fenPrincipale.setVisible(true);
     }
 }

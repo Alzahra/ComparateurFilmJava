@@ -6,8 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TableUtilisateurs extends Table {
+    private static TableUtilisateurs instance = null;
 
-    public TableUtilisateurs(BaseDeDonnee bdd) {
+    public static TableUtilisateurs getInstance() {
+        if (instance == null)
+            instance = new TableUtilisateurs(BaseDeDonnee.getInstance());
+        return instance;
+    }
+
+    private TableUtilisateurs(BaseDeDonnee bdd) {
         super(bdd);
     }
 

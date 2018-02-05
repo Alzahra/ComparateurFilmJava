@@ -31,7 +31,8 @@ abstract class Table {
         //System.out.println("Dans Table::create() ->\n" + stb);
         bdd.execute(stb.toString());
 
-
+        if (csvPath != null)
+            ;
     }
 
     /**

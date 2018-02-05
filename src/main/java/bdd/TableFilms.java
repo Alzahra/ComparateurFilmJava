@@ -7,7 +7,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class TableFilms extends Table {
-    public TableFilms(BaseDeDonnee bdd) {
+    private static TableFilms instance = null;
+
+    public static TableFilms getInstance() {
+        if (instance == null)
+            instance = new TableFilms(BaseDeDonnee.getInstance());
+        return instance;
+    }
+
+    private TableFilms(BaseDeDonnee bdd) {
         super(bdd);
     }
 

@@ -10,9 +10,16 @@ import java.util.HashMap;
  */
 public class BaseDeDonnee {
 	private Connection bdd;
-	private HashMap<String, Table> tables = new HashMap<>();
-	
-	public BaseDeDonnee() {
+
+	private static BaseDeDonnee instance = null;
+
+	public static BaseDeDonnee getInstance() {
+		if (instance == null)
+			instance = new BaseDeDonnee();
+		return instance;
+	}
+
+	private BaseDeDonnee() {
 		try {
 			Class.forName("org.h2.Driver"); // On charge le module H2
 			/*
@@ -21,8 +28,6 @@ public class BaseDeDonnee {
 			 * TODO : voir le chiffrement de la BDD (simple option normalement)
 			 */
 			bdd = DriverManager.getConnection("jdbc:h2:./test", "sa", "");
-			tables.put("films", new TableFilms(this));
-			tables.put("utilisateurs", new TableUtilisateurs(this));
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -81,10 +86,8 @@ public class BaseDeDonnee {
 	}
 
 	static public void main(String[] args) {
-		BaseDeDonnee baseDeDonnee = new BaseDeDonnee();
 		//baseDeDonnee.ajouter(new Film(1, "Mr Bean", 160, 7.8f, 20, new Date(Date.valueOf("1994-6-10").getTime()),
 		//		"drole", "Mr bean par en vacs :D", new String[]{"Le magnifique", "lul"}));
-		baseDeDonnee.createTable(null, null);
 
 		//for (Film f : baseDeDonnee.getFilms())
 		//	System.out.println(f);
