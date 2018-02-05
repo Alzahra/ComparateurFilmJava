@@ -12,11 +12,12 @@ public class Principale extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(800, 400);
 
-        add(new BarreHauteConnecte(), BorderLayout.NORTH);
+        add(new BarreHaute(), BorderLayout.NORTH);
         add(new VoirPlus(new Film(1, "Super film", 180, 9.9f, 10f,
                 new Date(151651), "comique", "Un comique qui comiquait.",
                 new String[]{"Le jardin du Jean", "Pecresse aura tes fesses"})), BorderLayout.EAST);
         add(new Centre(), BorderLayout.CENTER);
         pack();
+        setMinimumSize(getSize());
     }
 }

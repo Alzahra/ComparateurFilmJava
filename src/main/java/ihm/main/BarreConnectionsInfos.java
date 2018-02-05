@@ -2,13 +2,13 @@ package ihm.main;
 
 import javax.swing.*;
 
-public class BarreHauteConnecte extends VueFilm {
-    public BarreHauteConnecte() {
+public class BarreConnectionsInfos extends JPanel {
+    public BarreConnectionsInfos() {
         add(new Gauche());
         add(new Droite());
     }
 
-    private class Gauche extends VueFilm {
+    private class Gauche extends JPanel {
         public Gauche() {
             add(new JLabel("Bonjour Mr/Mme ..."));
             add(new JLabel("Votre solde est de : "));
@@ -16,7 +16,7 @@ public class BarreHauteConnecte extends VueFilm {
         }
     }
 
-    private class Droite extends VueFilm {
+    private class Droite extends JPanel {
         public Droite() {
             add(new JButton("Panier (0)"));
             add(new JButton("Mon compte"));

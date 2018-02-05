@@ -4,8 +4,9 @@ import bdd.Film;
 
 import javax.swing.*;
 
-public class VoirPlus extends VueFilm {
+public class VoirPlus extends JPanel {
     public VoirPlus(Film f) {
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         add(new JLabel("Synopsis : " + f.getSynopsis()));
 
         StringBuilder listActeurs = new StringBuilder();
