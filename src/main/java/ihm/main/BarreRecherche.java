@@ -20,8 +20,7 @@ public class BarreRecherche extends JPanel {
         add(genre);
 
         add(new JLabel("Durée :"));
-        JOptionPane duree = new JOptionPane();
-        duree.setSelectionValues(new String[]{
+        JComboBox<String> duree = new JComboBox<>(new String[]{
                 "< 180", "180 - 240", "> 240"
         });
         add(duree);

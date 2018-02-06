@@ -7,6 +7,8 @@ import bdd.TableUtilisateurs;
 import core.Criteres.Critere;
 import ihm.main.Principale;
 
+import javax.swing.*;
+import java.lang.annotation.Native;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -62,6 +64,18 @@ public class MoteurDeRecherche {
         bdd.createTable(tu, null);
 
         Principale fenPrincipale = new Principale("Comparateur Film");
+        /*
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        } */
         fenPrincipale.setVisible(true);
     }
 }
