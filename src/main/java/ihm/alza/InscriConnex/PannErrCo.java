@@ -1,10 +1,12 @@
-package InscriConnex;
+package ihm.alza.InscriConnex;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -12,10 +14,14 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class PannErrCo extends JPanel{
 
-	public PannErrCo() {
+	private ErreurConnexion fen;
+	
+	public PannErrCo(ErreurConnexion f) {
 		
+		fen =f;
 		this.setLayout(new GridBagLayout());
 		
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -31,6 +37,10 @@ public class PannErrCo extends JPanel{
 	    JTextField pseudo = new JTextField(10);
 	    JPasswordField mdp = new JPasswordField(10); 
     
+	    JButton valider = new JButton("Valider");
+	    JButton annuler = new JButton("Annuler");
+	    JButton inscription = new JButton("Inscris-toi");
+	    
 	    pseudol.setLabelFor(pseudo);
 	    mdpl.setLabelFor(mdp);
 
@@ -59,17 +69,43 @@ public class PannErrCo extends JPanel{
 		
 		gbc.gridx++;
 		gbc.gridy++;
-		this.add(new JButton("Valider"),gbc);
+
+		this.add(valider,gbc);
+		valider.addActionListener(new ErrAcLis('V'));
+		
 		gbc.gridx++;
-		this.add(new JButton("Annuler"),gbc);
+		this.add(annuler,gbc);
+		annuler.addActionListener(new ErrAcLis('A'));
 		gbc.gridy++;
 		
 		gbc.insets = new Insets(15, 5, 5, 1);
 		gbc.gridx = 2;
 		this.add(new JLabel("Pas encore inscrit ? --->"),gbc);
 		gbc.gridx++;
-		this.add(new JButton("Inscris-toi"),gbc);
-		
-	   	
+		this.add(inscription,gbc);
+		inscription.addActionListener(new ErrAcLis('I'));
 	}
+	
+	class ErrAcLis implements ActionListener{
+		
+		private char c;
+		public ErrAcLis(char c) {
+			this.c = c;
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(c=='V') {
+//				if(verifierMdp()) new FenetrePrincipale();
+//				else new ErreurConnexion();
+				fen.dispose();
+			}if(c=='A')	
+				fen.dispose();
+			if (c=='I')	{
+				new Inscription();
+				//fen.dispose();
+			}
+		}
+		
+	}
+	
 }

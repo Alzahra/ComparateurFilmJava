@@ -1,18 +1,29 @@
-package ModifCompte;
+package ihm.alza.ModifCompte;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
+import ihm.alza.InformationCompte.InformationAdmin;
+import ihm.alza.InformationCompte.InformationClient;
+
+@SuppressWarnings("serial")
 public class PannMdp extends JPanel{
 
-	public PannMdp() {
+	private ChangerMdp fen;
+	private char role;
+	
+	public PannMdp(ChangerMdp f,char r) {
 		this.setLayout(new GridBagLayout());
+		fen = f;
+		role = r;
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
@@ -26,6 +37,8 @@ public class PannMdp extends JPanel{
 	    JPasswordField nvmdp = new JPasswordField(10); 
 	    JPasswordField confmdp = new JPasswordField(10);
 
+	    JButton valider =new JButton("Valider");
+	    JButton annuler = new JButton("Annuler");
 	    
 	    mdpactuel.setLabelFor(mdpactu);
 	    nvmdpl.setLabelFor(nvmdp);
@@ -49,12 +62,33 @@ public class PannMdp extends JPanel{
 		gbc.gridy++;
 		
 		gbc.gridy++;
-		this.add(new JButton("Valider"),gbc);
+		this.add(valider,gbc);
+		valider.addActionListener(new MdpAcLis('V'));
 		gbc.gridx++;
-		this.add(new JButton("Annuler"),gbc);
+		this.add(annuler,gbc);
+		annuler.addActionListener(new MdpAcLis('A'));
 		gbc.gridy++;
 
-	   
+	}
+	
+	class MdpAcLis implements ActionListener{
 		
+		private char c;
+		public MdpAcLis(char c) {
+			this.c = c;
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(c=='V') {
+				if(role == 'C') new InformationClient();
+				if (role == 'A') new InformationAdmin();
+				fen.dispose();
+			}if (c=='A') {
+				if(role == 'C') new InformationClient();
+				if (role == 'A') new InformationAdmin();
+				fen.dispose();
+			}
+			
+		}
 	}
 }

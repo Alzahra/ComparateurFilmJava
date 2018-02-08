@@ -1,9 +1,9 @@
 package bdd;
 
+import org.h2.tools.Csv;
+
 import java.math.BigDecimal;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class TableFilms extends Table {
@@ -11,12 +11,11 @@ public class TableFilms extends Table {
 
     public static TableFilms getInstance() {
         if (instance == null)
-            instance = new TableFilms(BaseDeDonnee.getInstance());
+            instance = new TableFilms();
         return instance;
     }
 
-    private TableFilms(BaseDeDonnee bdd) {
-        super(bdd);
+    private TableFilms() {
     }
 
     @Override
@@ -28,20 +27,20 @@ public class TableFilms extends Table {
     protected String[] getColonnes() {
         return new String[] {
                 "id INT AUTO_INCREMENT (0, 1) PRIMARY KEY",
-                "nom VARCHAR(35) NOT NULL",
-                "prenom VARCHAR(35) NOT NULL",
-                "pseudo VARCHAR(35) NOT NULL UNIQUE",
-                "email VARCHAR(35) NOT NULL UNIQUE",
-                "films_loue VARCHAR(1000)",
-                "solde DECIMAL NOT NULL",
-                "role VARCHAR(6) NOT NULL",
-                "pwd VARCHAR(256) NOT NULL"
+                "titre VARCHAR(255) NOT NULL UNIQUE",
+                "duree SMALLINT NOT NULL",
+                "note DECIMAL NOT NULL",
+                "prix DECIMAL NOT NULL",
+                "date_sortie DATE NOT NULL",
+                "genres VARCHAR(15) NOT NULL",
+                "synopsis VARCHAR(1500) NOT NULL",
+                "acteurs VARCHAR(300) NOT NULL"
         };
     }
 
     public void ajouter(Film film) {
         try {
-            PreparedStatement pst = bdd.getConnection().prepareStatement("INSERT INTO films (" +
+            PreparedStatement pst = BaseDeDonnee.getInstance().getConnection().prepareStatement("INSERT INTO films (" +
                     "titre," +
                     "duree," +
                     "note," +
@@ -74,7 +73,7 @@ public class TableFilms extends Table {
 
     public void modifier(Film film) {
         try {
-            PreparedStatement pst = bdd.getConnection().prepareStatement("UPDATE films" +
+            PreparedStatement pst = BaseDeDonnee.getInstance().getConnection().prepareStatement("UPDATE films" +
                     "SET titre=?," +
                     "duree=?," +
                     "note=?," +
@@ -107,7 +106,7 @@ public class TableFilms extends Table {
 
     public void supprimer(Film film) {
         try {
-            PreparedStatement pst = bdd.getConnection().prepareStatement("DELETE FROM films" +
+            PreparedStatement pst = BaseDeDonnee.getInstance().getConnection().prepareStatement("DELETE FROM films" +
                     "WHERE id=?;");
             pst.setInt(1, film.getId());
             pst.executeUpdate();
@@ -121,7 +120,7 @@ public class TableFilms extends Table {
         ArrayList<Film> films = new ArrayList<>();
 
         try {
-            ResultSet set = bdd.getConnection().prepareStatement("SELECT * FROM films").executeQuery();
+            ResultSet set = BaseDeDonnee.getInstance().getConnection().prepareStatement("SELECT * FROM films").executeQuery();
             while (set.next()) {
                 Film film = new Film(set.getInt("id"),
                         set.getString("titre"),
@@ -145,7 +144,7 @@ public class TableFilms extends Table {
     public Film getFilm(String titre) {
         Film film = null;
         try {
-            PreparedStatement pst = bdd.getConnection().prepareStatement("SELECT * FROM films WHERE titre = ?");
+            PreparedStatement pst = BaseDeDonnee.getInstance().getConnection().prepareStatement("SELECT * FROM films WHERE titre = ?");
             pst.setString(1, titre);
             ResultSet set = pst.executeQuery();
             while (set.next()) {
@@ -164,5 +163,78 @@ public class TableFilms extends Table {
             e.printStackTrace();
         }
         return film;
+    }
+
+    public void addFromCSV(String path) {
+        try{
+            Csv csv = new Csv();
+            csv.setFieldSeparatorRead('|');
+            csv.setCaseSensitiveColumnNames(true);
+            ResultSet rs = csv.read(path, null, null);
+            ResultSetMetaData meta = rs.getMetaData();
+
+            String titre = null; int duree = 0; float note = 0;
+            float prix = 0; Date sortie = new Date(0); String genre = null;
+            String synopsis = null; String acteurs = null;
+
+            while (rs.next()) {
+                for (int i = 0; i < meta.getColumnCount(); i++) {
+                    switch (meta.getColumnLabel(i + 1)) {
+                        case "titre":
+                            titre = rs.getString(i + 1);
+                            break;
+                        case "duree":
+                            duree = Integer.parseInt(rs.getString(i + 1));
+                            break;
+                        case "note":
+                            note = Float.parseFloat(rs.getString(i + 1));
+                            break;
+                        case "prix":
+                            prix = Float.parseFloat(rs.getString(i + 1));
+                            break;
+                        case "date_sortie":
+                            sortie = Date.valueOf(rs.getString(i + 1));
+                            break;
+                        case "genres":
+                            genre = rs.getString(i + 1);
+                            break;
+                        case "synopsis":
+                            synopsis = rs.getString(i + 1);
+                            break;
+                        case "acteurs":
+                            acteurs = rs.getString(i + 1);
+                            break;
+                    }
+                }
+
+                try {
+                    PreparedStatement pst = BaseDeDonnee.getInstance().getConnection().prepareStatement("INSERT INTO films (" +
+                            "titre," +
+                            "duree," +
+                            "note," +
+                            "prix," +
+                            "date_sortie," +
+                            "genres," +
+                            "synopsis," +
+                            "acteurs" +
+                            ") values (?,?,?,?,?,?,?,?);");
+                    pst.setString(1, titre);
+                    pst.setInt(2, duree);
+                    pst.setBigDecimal(3, BigDecimal.valueOf(note));
+                    pst.setBigDecimal(4, BigDecimal.valueOf(prix));
+                    pst.setDate(5, sortie);
+                    pst.setString(6, genre);
+                    pst.setString(7, synopsis);
+                    pst.setString(8, acteurs);
+                    pst.executeUpdate();
+                    pst.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

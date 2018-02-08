@@ -1,9 +1,11 @@
-package Paiement;
+package ihm.alza.Paiement;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -17,11 +19,16 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import ihm.alza.Checkout.DetailPanier;
+
+@SuppressWarnings({ "rawtypes", "unchecked","serial" })
 public class PannPaiement extends JPanel{
 
-	public PannPaiement() throws IOException {
+	private Paiement fen;
+	
+	public PannPaiement(Paiement f) throws IOException {
 		this.setLayout(new GridBagLayout());
-		
+		fen = f;
 		JRadioButton cbRB = new JRadioButton("CB");
         JRadioButton soldeRB = new JRadioButton("Solde du compte");
         ButtonGroup group = new ButtonGroup();
@@ -29,8 +36,8 @@ public class PannPaiement extends JPanel{
         group.add(soldeRB);
         cbRB.setSelected(true);
         
-        Image vis = ImageIO.read(new File("./src/Paiement/visa.jpeg"));
-        Image mc = ImageIO.read(new File("./src/Paiement/MasterCard.jpeg"));
+        Image vis = ImageIO.read(new File("./src/ihm/Paiement/visa.jpeg"));
+        Image mc = ImageIO.read(new File("./src/ihm/Paiement/MasterCard.jpeg"));
         JRadioButton visa = new JRadioButton(new ImageIcon(vis));
         JRadioButton masterc = new JRadioButton(new ImageIcon(mc));
         ButtonGroup group2 = new ButtonGroup();
@@ -44,12 +51,16 @@ public class PannPaiement extends JPanel{
 		JLabel numcarte = new JLabel("Numero de carte de credit: ", JLabel.CENTER);
 		JLabel typec = new JLabel("Type de carte de credit:");
 		JLabel dateexp = new JLabel("Date d'expiration: ", JLabel.CENTER);
+		
 		JComboBox anneeCB = new JComboBox(annee);
 		JComboBox moisCB = new JComboBox(mois);
 	    JLabel codesecu = new JLabel("Code de securite: ", JLabel.CENTER);
 	    
 	    JTextField numc = new JTextField(20);
 	    JTextField codesec = new JTextField(3);
+	    
+	    JButton finaliser = new JButton("Finaliser l'achat");
+	    JButton annuler = new JButton("Annuler");
 	    
 	    JLabel solde = new JLabel("Solde Disponible: ", JLabel.CENTER);
 	    JTextField soldetf = new JTextField("0",6);
@@ -108,11 +119,34 @@ public class PannPaiement extends JPanel{
 		
 		gbc.gridx=2;
 		gbc.gridy=9;
-		this.add(new JButton("Finaliser l'achat"),gbc);
+		this.add(finaliser,gbc);
+		finaliser.addActionListener(new PaiementAcLis('F'));
 		gbc.gridx++;
-		this.add(new JButton("Annuler"),gbc);
+		this.add(annuler,gbc);
+		annuler.addActionListener(new PaiementAcLis('A'));
 		gbc.gridy++;
-		
-	
+
 	}
+	
+	class PaiementAcLis implements ActionListener{
+		
+		private char c;
+		public PaiementAcLis(char c) {
+			this.c=c;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (c=='F') {
+//				if(verifmontant()) new InformationClient(); //affiche film loue
+//				else new PaiementRefuse();
+				fen.dispose();
+			}if (c=='A') {
+				new DetailPanier();	
+				fen.dispose();
+			}
+		}
+	}
+	
+	
 }

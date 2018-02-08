@@ -11,7 +11,7 @@ public class CritereTitre extends Critere {
 
     @Override
     public int evaluate(Film film) {
-        if (titreFilm.equals(film.getTitre())) return 100;
+        if (titreFilm.toLowerCase().contains(film.getTitre().toLowerCase())) return 100;
         return -20;
     }
 }

@@ -50,6 +50,7 @@ public class BaseDeDonnee {
 		t.create(csv);
 	}
 
+	/*
 	public void addFromCSV(String path, String table) {
 		try{
 			Csv csv = new Csv();
@@ -69,7 +70,7 @@ public class BaseDeDonnee {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
+	} */
 
 	/**
 	 * Permet d'executer une action simple sur la BDD (sans paramètre ni retour)

@@ -1,34 +1,27 @@
-package ModifCompte;
+package ihm.alza.ModifCompte;
 
 import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class ChangerMdp extends JFrame{
 	
-	private PannMdp centre = new PannMdp();
-	public ChangerMdp() {
-		JFrame fen = new JFrame();
-		fen.setSize(500, 250);
-		fen.setTitle("Modification du mot de passe");
-		fen.setLocationRelativeTo(null);	
-		fen.setLayout(new FlowLayout());
+	private PannMdp centre;
+	private char role;
+	public ChangerMdp(char r) {
+		role = r;
+		centre = new PannMdp(this,role);
+		this.setSize(500, 250);
+		this.setTitle("Modification du mot de passe");
+		this.setLocationRelativeTo(null);	
+		this.setLayout(new FlowLayout());
 		 
-		fen.setContentPane(centre);
-		fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		fen.setVisible(true);
+		this.setContentPane(centre);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);
 	}
-	public static void main(String[] args) {
-		
-		ChangerMdp fen = new ChangerMdp();
-		
-	}
+//	public static void main(String[] args) {
+//		ChangerMdp fen = new ChangerMdp('A');
+//		
+//	}
 }

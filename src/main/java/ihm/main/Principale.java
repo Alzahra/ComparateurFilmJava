@@ -1,23 +1,28 @@
 package ihm.main;
 
 import bdd.Film;
+import core.MoteurDeRecherche;
 
 import javax.swing.*;
 import java.awt.*;
 import java.sql.Date;
 
 public class Principale extends JFrame {
-    public Principale(String titre) {
+    public Principale(String titre, MoteurDeRecherche m) {
         setTitle(titre);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(800, 400);
 
-        add(new BarreHaute(), BorderLayout.NORTH);
+        Centre c = new Centre();
+        add(new BarreHaute(m, c), BorderLayout.NORTH);
         add(new VoirPlus(new Film(1, "Super film", 180, 9.9f, 10f,
                 new Date(151651), "comique", "Un comique qui comiquait.",
                 new String[]{"Le jardin du Jean", "Pecresse aura tes fesses"})), BorderLayout.EAST);
-        add(new Centre(), BorderLayout.CENTER);
+        add(c, BorderLayout.CENTER);
         pack();
-        setMinimumSize(getSize());
+        Dimension d = getSize();
+        d.height += 20;
+        d.width += 20;
+        setMinimumSize(d);
     }
 }

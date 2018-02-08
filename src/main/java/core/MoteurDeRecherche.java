@@ -1,9 +1,6 @@
 package core;
 
-import bdd.BaseDeDonnee;
-import bdd.Film;
-import bdd.TableFilms;
-import bdd.TableUtilisateurs;
+import bdd.*;
 import core.Criteres.Critere;
 import ihm.main.Principale;
 
@@ -20,16 +17,14 @@ public class MoteurDeRecherche {
      * En tout cas faut garder cette liste et la BDD synchronisé
      */
     private ArrayList<Film> bddTemporaire;
-    private BaseDeDonnee bdd;
     /**
      * Les résultats de la dernière recherche
      */
     private ArrayList<Resultat> resultats = new ArrayList<>();
 
-    // TODO : Pas besoin de passer la BDD en paramètre mais l'instancier direct ?!
-    public MoteurDeRecherche(BaseDeDonnee bdd) {
-        this.bdd = bdd;
+    public MoteurDeRecherche() {
         //bddTemporaire = bdd.getFilms(); // TODO : corriger ca
+        bddTemporaire = TableFilms.getInstance().getFilms();
     }
 
     /**
@@ -60,10 +55,13 @@ public class MoteurDeRecherche {
         TableFilms tf = TableFilms.getInstance();
         TableUtilisateurs tu = TableUtilisateurs.getInstance();
 
-        bdd.createTable(tf, null);
+        // On repart à chaque fois d'une BDD neuve pour l'instant
+        // Pas de sauvegarde des modifications des tables
+        tf.destroy(); tu.destroy();
+        bdd.createTable(tf, "./films.csv");
         bdd.createTable(tu, null);
 
-        Principale fenPrincipale = new Principale("Comparateur Film");
+        Principale fenPrincipale = new Principale("Comparateur Film", new MoteurDeRecherche());
         /*
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

@@ -1,9 +1,11 @@
-package Paiement;
+package ihm.alza.Paiement;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -17,11 +19,14 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+
+@SuppressWarnings({ "rawtypes", "unchecked","serial" })
 public class PanneauRecharge extends JPanel {
 
-	public PanneauRecharge() throws IOException {
+	private Rechargement fen;
+	public PanneauRecharge(Rechargement f) throws IOException {
 		this.setLayout(new GridBagLayout());
-		
+		fen =f;
 		JRadioButton cbRB = new JRadioButton("CB");
         JRadioButton soldeRB = new JRadioButton("Solde du compte");
         ButtonGroup group = new ButtonGroup();
@@ -29,8 +34,8 @@ public class PanneauRecharge extends JPanel {
         group.add(soldeRB);
         cbRB.setSelected(true);
         
-        Image vis = ImageIO.read(new File("./src/Paiement/visa.jpeg"));
-        Image mc = ImageIO.read(new File("./src/Paiement/MasterCard.jpeg"));
+        Image vis = ImageIO.read(new File("./src/ihm/Paiement/visa.jpeg"));
+        Image mc = ImageIO.read(new File("./src/ihm/Paiement/MasterCard.jpeg"));
         JRadioButton visa = new JRadioButton(new ImageIcon(vis));
         JRadioButton masterc = new JRadioButton(new ImageIcon(mc));
         ButtonGroup group2 = new ButtonGroup();
@@ -53,7 +58,9 @@ public class PanneauRecharge extends JPanel {
 	    JTextField codesec = new JTextField(3);
 	    JTextField montanttf = new JTextField(6);
 	  
-		
+	    JButton finaliser = new JButton("Finaliser");
+	    JButton annuler = new JButton("Annuler");
+	    
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -95,16 +102,33 @@ public class PanneauRecharge extends JPanel {
 		this.add(codesecu, gbc);
 		gbc.gridx = 1 ;
 		this.add(codesec,gbc);
-		
-	
-		
+
 		gbc.gridx=2;
 		gbc.gridy=9;
-		this.add(new JButton("Finaliser"),gbc);
+		this.add(finaliser,gbc);
+		finaliser.addActionListener(new RechargeAcLis('F'));
 		gbc.gridx++;
-		this.add(new JButton("Annuler"),gbc);
-		gbc.gridy++;
-		
+		this.add(annuler,gbc);
+		annuler.addActionListener(new RechargeAcLis('A'));
+		gbc.gridy++;	
+	}
 	
+	class RechargeAcLis implements ActionListener{
+		
+		private char c;
+		public RechargeAcLis(char c) {
+			this.c=c;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (c=='F') {
+				//ajoutersolde(montanttf);
+				fen.dispose();
+			}if (c=='A') {
+				//new FenetrePrincipaleConn();
+				fen.dispose();
+			}
+		}
 	}
 }

@@ -9,10 +9,8 @@ import java.sql.Statement;
  * type d'élément que contient le tableau.
  */
 abstract class Table {
-    protected BaseDeDonnee bdd;
 
-    public Table(BaseDeDonnee bdd) {
-        this.bdd = bdd;
+    public Table() {
     }
 
     /**
@@ -29,10 +27,10 @@ abstract class Table {
         }
         stb.append(");");
         //System.out.println("Dans Table::create() ->\n" + stb);
-        bdd.execute(stb.toString());
+        BaseDeDonnee.getInstance().execute(stb.toString());
 
         if (csvPath != null)
-            ;
+            addFromCSV(csvPath);
     }
 
     /**
@@ -52,11 +50,13 @@ abstract class Table {
      */
     public void destroy() {
         try {
-            Statement statement = bdd.getConnection().createStatement();
+            Statement statement = BaseDeDonnee.getInstance().getConnection().createStatement();
             statement.execute("DROP TABLE IF EXISTS " + getName() + ";");
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+    abstract public void addFromCSV(String path);
 }

@@ -1,4 +1,4 @@
-package Paiement;
+package ihm.alza.Paiement;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -6,8 +6,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class PaiementRefuse {
-	public static void main(String[] args) {
-		
+	
+	public PaiementRefuse() {
 		JLabel label = new JLabel("<html>Votre paiement a ete refuse et annule, "
 				+ "vous ne serez pas debite.<br> Veuillez reessayer ou verifier "
 				+ "le solde de votre compte</html>");
@@ -18,4 +18,5 @@ public class PaiementRefuse {
 				JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
 				null, options, options[0]);
 	}
+	
 }

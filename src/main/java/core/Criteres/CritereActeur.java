@@ -16,7 +16,7 @@ public class CritereActeur extends Critere {
         int score = 0;
         for (String s : acteurFilm) {
             for (String ss : film.getActeurs()) {
-                if (s.equals(ss))
+                if (s.equalsIgnoreCase(ss))
                     score += 50;
             }
         }

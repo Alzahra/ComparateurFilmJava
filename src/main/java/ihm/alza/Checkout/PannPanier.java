@@ -1,17 +1,30 @@
-package Checkout;
+package ihm.alza.Checkout;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+
+import ihm.alza.Paiement.*;
+
+
+@SuppressWarnings("serial")
 public class PannPanier extends JPanel{
 	
-	public PannPanier() {
+	private DetailPanier fen;
+	
+	public PannPanier(DetailPanier d) {
+		fen = d;
+		//Apres reflexion, je pense qu'il faut faire une JTable puisque c'est un retour de requete BDD non ?
+		
 		this.setLayout(new GridBagLayout());
 		
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -26,6 +39,9 @@ public class PannPanier extends JPanel{
 	    JLabel fin = new JLabel("Date de fin de location ", JLabel.CENTER);
 	    JLabel prix = new JLabel("Prix ", JLabel.CENTER);
 	    JLabel supp = new JLabel("Supprimer ", JLabel.CENTER);
+	    
+	    JButton valider = new JButton("Valider");
+	    JButton annuler = new JButton("Annuler");
 	    
 	    gbc.insets = new Insets(10, 10, 10,10);
 
@@ -70,11 +86,36 @@ public class PannPanier extends JPanel{
 
 		
 		gbc.gridx = 4;
-		this.add(new JButton("Valider"),gbc);
+		this.add(valider,gbc);
+		valider.addActionListener(new PannAcLis('V'));
 		gbc.gridx++;
-		this.add(new JButton("Annuler"),gbc);
+		this.add(annuler,gbc);
+		annuler.addActionListener(new PannAcLis('A'));
 		gbc.gridy++;
-		
 			
 	}
+	
+	class PannAcLis implements ActionListener {
+
+		private char action;
+		public PannAcLis(char ac) {
+			action = ac;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(action == 'V') {
+				try {
+					new Paiement();
+				} catch (IOException e1) {
+					
+					e1.printStackTrace();
+				}
+				fen.dispose();	
+			}if(action == 'A')
+				fen.dispose();
+		}
+		
+	}
+	
 }

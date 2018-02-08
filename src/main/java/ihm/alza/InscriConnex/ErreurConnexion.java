@@ -1,37 +1,29 @@
-package InscriConnex;
+package ihm.alza.InscriConnex;
 
-import java.awt.Color;
+
 import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+
 
 //A voir si on la garde on si on gere l'affichage du message en rouge 
 //par une action d'erreur dans les listener ?
+@SuppressWarnings("serial")
 public class ErreurConnexion extends JFrame{
 
-	private PannErrCo centre = new PannErrCo();
+	private PannErrCo centre;
 	public ErreurConnexion() {
-		JFrame fen = new JFrame();
-		fen.setSize(700, 300);
-		fen.setTitle("Login");
-		fen.setLocationRelativeTo(null);	
-		fen.setLayout(new FlowLayout());
-		fen.setContentPane(centre);
-		fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		fen.setVisible(true);		
+		centre = new PannErrCo(this);
+		this.setSize(700, 300);
+		this.setTitle("Login");
+		this.setLocationRelativeTo(null);	
+		this.setLayout(new FlowLayout());
+		this.setContentPane(centre);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);		
 	}
-	public static void main(String[] args) {
-		//TODO tracer trait
-		ErreurConnexion fen = new ErreurConnexion();
-
-	}
+//	public static void main(String[] args) {
+//		//TODO tracer trait
+//		ErreurConnexion fen = new ErreurConnexion();
+//
+//	}
 }

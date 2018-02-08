@@ -1,28 +1,27 @@
-package Checkout;
+package ihm.alza.Checkout;
 
 import java.awt.FlowLayout;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class ContinuerAchat extends JFrame{
 
-	private PannCont panel = new PannCont();
+	private PannCont panel;
 	
 	public ContinuerAchat() {
-		JFrame fen = new JFrame();
-		//panel.setLayout(new FlowLayout());
-		fen.setContentPane(panel);
-		fen.setVisible(true);
-		fen.setSize(400, 100);
-		fen.setTitle("Continuer achat ou payer");
-		fen.setLocationRelativeTo(null);
-		fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+		panel = new PannCont(this);
+		panel.setLayout(new FlowLayout());
+		this.setContentPane(panel);
+		this.setVisible(true);
+		this.setSize(400, 100);
+		this.setTitle("Continuer achat ou payer");
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
-	
-	public static void main(String[] args) {	
-		ContinuerAchat fenetre = new ContinuerAchat();
-	}
+//	
+//	public static void main(String[] args) {	
+//		ContinuerAchat fenetre = new ContinuerAchat();
+//	}
 }

@@ -1,37 +1,30 @@
-package Checkout;
+package ihm.alza.Checkout;
 
 import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class DetailPanier extends JFrame{
 	
-	private PannPanier centre = new PannPanier();
-	
+	private PannPanier centre;
+
 	public DetailPanier() {
-		JFrame fen = new JFrame();
-		fen.setSize(900, 400);
-		fen.setTitle("Login");
-		fen.setLocationRelativeTo(null);	
-		fen.setLayout(new FlowLayout());
+		centre = new PannPanier(this);
 
-	    fen.setContentPane(centre);
-		fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		fen.setVisible(true);		
+		this.setSize(900, 400);
+		this.setTitle("Login");
+		this.setLocationRelativeTo(null);	
+		this.setLayout(new FlowLayout());
+
+	    this.setContentPane(centre);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);		
 	}
 	
-	public static void main(String[] args) {
-
-		DetailPanier fen = new DetailPanier();
-		
-	}
+//	public static void main(String[] args) {
+//
+//		DetailPanier fen = new DetailPanier();
+//		
+//	}
 }

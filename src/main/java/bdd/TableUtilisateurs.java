@@ -10,12 +10,11 @@ public class TableUtilisateurs extends Table {
 
     public static TableUtilisateurs getInstance() {
         if (instance == null)
-            instance = new TableUtilisateurs(BaseDeDonnee.getInstance());
+            instance = new TableUtilisateurs();
         return instance;
     }
 
-    private TableUtilisateurs(BaseDeDonnee bdd) {
-        super(bdd);
+    private TableUtilisateurs() {
     }
 
     @Override
@@ -27,14 +26,14 @@ public class TableUtilisateurs extends Table {
     protected String[] getColonnes() {
         return new String[] {
                 "id INT AUTO_INCREMENT (0, 1) PRIMARY KEY",
-                "titre VARCHAR(255) NOT NULL UNIQUE",
-                "duree SMALLINT NOT NULL",
-                "note DECIMAL NOT NULL",
-                "prix DECIMAL NOT NULL",
-                "date_sortie DATE NOT NULL",
-                "genres VARCHAR(15) NOT NULL",
-                "synopsis VARCHAR(1500) NOT NULL",
-                "acteurs VARCHAR(300) NOT NULL"
+                "nom VARCHAR(35) NOT NULL",
+                "prenom VARCHAR(35) NOT NULL",
+                "pseudo VARCHAR(35) NOT NULL UNIQUE",
+                "email VARCHAR(35) NOT NULL UNIQUE",
+                "films_loue VARCHAR(1000)",
+                "solde DECIMAL NOT NULL",
+                "role VARCHAR(6) NOT NULL",
+                "pwd VARCHAR(256) NOT NULL"
         };
     }
 
@@ -47,7 +46,7 @@ public class TableUtilisateurs extends Table {
      */
     public void ajouter(Utilisateur user, String pwd) {
         try {
-            PreparedStatement pst = bdd.getConnection().prepareStatement("INSERT INTO utilisateurs (" +
+            PreparedStatement pst = BaseDeDonnee.getInstance().getConnection().prepareStatement("INSERT INTO utilisateurs (" +
                     "nom," +
                     "prenom," +
                     "pseudo," +
@@ -75,7 +74,7 @@ public class TableUtilisateurs extends Table {
 
     public void modifier(Utilisateur user, String pwd) {
         try {
-            PreparedStatement pst = bdd.getConnection().prepareStatement("UPDATE utilisateurs" +
+            PreparedStatement pst = BaseDeDonnee.getInstance().getConnection().prepareStatement("UPDATE utilisateurs" +
                     "SET nom=?," +
                     "prenom=?," +
                     "pseudo=?," +
@@ -109,7 +108,7 @@ public class TableUtilisateurs extends Table {
 
     public void supprimer(Utilisateur user) {
         try {
-            PreparedStatement pst = bdd.getConnection().prepareStatement("DELETE FROM utilisateurs" +
+            PreparedStatement pst = BaseDeDonnee.getInstance().getConnection().prepareStatement("DELETE FROM utilisateurs" +
                     "WHERE id=?;");
             pst.setInt(1, user.getId());
             pst.executeUpdate();
@@ -128,7 +127,7 @@ public class TableUtilisateurs extends Table {
     public Utilisateur getUser(String pseudo, String pwd, TableFilms tFilms) {
         Utilisateur user = null;
         try {
-            PreparedStatement pst = bdd.getConnection().prepareStatement("SELECT * FROM utilisateurs WHERE pseudo = ?;");
+            PreparedStatement pst = BaseDeDonnee.getInstance().getConnection().prepareStatement("SELECT * FROM utilisateurs WHERE pseudo = ?;");
             pst.setString(1, pseudo);
             ResultSet set = pst.executeQuery();
             if (set.next()) {
@@ -148,5 +147,10 @@ public class TableUtilisateurs extends Table {
             e.printStackTrace();
         }
         return user;
+    }
+
+    @Override
+    public void addFromCSV(String path) {
+        // TODO
     }
 }
