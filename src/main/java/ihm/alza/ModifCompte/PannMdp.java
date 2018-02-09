@@ -80,11 +80,11 @@ public class PannMdp extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(c=='V') {
-				if(role == 'C') new InformationClient();
+				if(role == 'C') new InformationClient(null);
 				if (role == 'A') new InformationAdmin();
 				fen.dispose();
 			}if (c=='A') {
-				if(role == 'C') new InformationClient();
+				if(role == 'C') new InformationClient(null);
 				if (role == 'A') new InformationAdmin();
 				fen.dispose();
 			}

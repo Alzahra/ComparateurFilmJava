@@ -8,8 +8,10 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 public class Centre extends JScrollPane {
-    private JPanel content = new JPanel();;
-    public Centre() {
+    private JPanel content = new JPanel();
+    private Principale p;
+    public Centre(Principale p) {
+        this.p = p;
         setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         setViewportView(content);
         content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
@@ -39,7 +41,11 @@ public class Centre extends JScrollPane {
     public void afficher(ArrayList<Resultat> rs) {
         content.removeAll();
         for (Resultat r : rs)
-            content.add(new VueFilm(r.getFilm()));
+            content.add(new VueFilm(r.getFilm(), this));
         content.updateUI();
+    }
+
+    public void toggleExtraInfos(Film f) {
+        p.afficheInfo(f);
     }
 }

@@ -41,6 +41,7 @@ public class Client extends Utilisateur {
     static HashMap<Film, Date> formatFilmsForClient(String f, TableFilms tFilm) {
         HashMap<Film, Date> films = new HashMap<>();
 
+        if (f == null) return films;
         for (String s : f.split(";")) {
             String titre = s.substring(0, s.indexOf("(")); // Extraction du titre du film
             // Extraction de la date de fin de location

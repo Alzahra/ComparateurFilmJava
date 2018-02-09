@@ -5,10 +5,16 @@ import bdd.Film;
 import javax.swing.*;
 
 public class VoirPlus extends JPanel {
-    public VoirPlus(Film f) {
+    JLabel synopsis = new JLabel();
+    JLabel acteurs = new JLabel();
+    public VoirPlus() {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        add(new JLabel("Synopsis : " + f.getSynopsis()));
+        add(synopsis);
+        add(acteurs);
+    }
 
+    public void setFilm(Film f) {
+        synopsis.setText("Synopsis : " + f.getSynopsis());
         StringBuilder listActeurs = new StringBuilder();
         listActeurs.append("Acteurs : \n");
         for (int i = 0; i < f.getActeurs().length; i++) {
@@ -18,6 +24,6 @@ public class VoirPlus extends JPanel {
             else
                 listActeurs.append(".");
         }
-        add(new JLabel(listActeurs.toString()));
+        acteurs.setText(listActeurs.toString());
     }
 }

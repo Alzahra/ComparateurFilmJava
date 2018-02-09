@@ -1,9 +1,9 @@
 package bdd;
 
+import org.h2.tools.Csv;
+
 import java.math.BigDecimal;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class TableUtilisateurs extends Table {
     private static TableUtilisateurs instance = null;
@@ -121,10 +121,9 @@ public class TableUtilisateurs extends Table {
     /**
      *
      * @param pseudo
-     * @param pwd
      * @return null si pas le bon login
      */
-    public Utilisateur getUser(String pseudo, String pwd, TableFilms tFilms) {
+    public Utilisateur getUser(String pseudo) {
         Utilisateur user = null;
         try {
             PreparedStatement pst = BaseDeDonnee.getInstance().getConnection().prepareStatement("SELECT * FROM utilisateurs WHERE pseudo = ?;");
@@ -135,7 +134,7 @@ public class TableUtilisateurs extends Table {
                     user = new Client(set.getInt("id"),
                             pseudo, set.getString("nom"), set.getString("prenom"),
                             set.getString("email"), set.getString("role"),
-                            set.getBigDecimal("solde").floatValue(), Client.formatFilmsForClient(set.getString("films_loue"), tFilms));
+                            set.getBigDecimal("solde").floatValue(), Client.formatFilmsForClient(set.getString("films_loue"), TableFilms.getInstance()));
                 } else {
                     user = new Utilisateur(set.getInt("id"),
                             pseudo, set.getString("nom"), set.getString("prenom"),
@@ -149,8 +148,88 @@ public class TableUtilisateurs extends Table {
         return user;
     }
 
+    public String getPwd(Utilisateur user) {
+        String pwd = null;
+        try {
+            PreparedStatement pst = BaseDeDonnee.getInstance().getConnection().prepareStatement("SELECT * FROM utilisateurs WHERE pseudo = ?;");
+            pst.setString(1, user.getPseudo());
+            ResultSet set = pst.executeQuery();
+            if (set.next()) {
+                pwd = set.getString("pwd");
+            }
+            set.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pwd;
+    }
+
     @Override
     public void addFromCSV(String path) {
-        // TODO
+        try{
+            Csv csv = new Csv();
+            csv.setFieldSeparatorRead('|');
+            csv.setCaseSensitiveColumnNames(true);
+            ResultSet rs = csv.read(path, null, null);
+            ResultSetMetaData meta = rs.getMetaData();
+
+            String nom = null; String prenom = null; String pseudo = null;
+            String email = null; float solde = 0; String role = null;
+            String pwd = null;
+
+            while (rs.next()) {
+                for (int i = 0; i < meta.getColumnCount(); i++) {
+                    switch (meta.getColumnLabel(i + 1)) {
+                        case "nom":
+                            nom = rs.getString(i + 1);
+                            break;
+                        case "prenom":
+                            prenom = rs.getString(i + 1);
+                            break;
+                        case "pseudo":
+                            pseudo = rs.getString(i + 1);
+                            break;
+                        case "email":
+                            email = rs.getString(i + 1);
+                            break;
+                        case "solde":
+                            solde = Float.parseFloat(rs.getString(i + 1));
+                            break;
+                        case "pwd":
+                            pwd = rs.getString(i + 1);
+                            break;
+                    }
+                }
+
+                try {
+                    PreparedStatement pst = BaseDeDonnee.getInstance().getConnection().prepareStatement("INSERT INTO utilisateurs (" +
+                            "nom," +
+                            "prenom," +
+                            "pseudo," +
+                            "email," +
+                            "solde," +
+                            "role," +
+                            "pwd" +
+                            ") values (?,?,?,?,?,?,?);");
+                    pst.setString(1, nom);
+                    pst.setString(2, prenom);
+                    pst.setString(3, pseudo);
+                    pst.setString(4, email);
+                    if (role.equals("user"))
+                        pst.setBigDecimal(5, BigDecimal.valueOf(solde));
+                    else
+                        pst.setBigDecimal(5, BigDecimal.valueOf(0));
+                    pst.setString(6, role);
+                    pst.setString(7, pwd);
+                    pst.executeUpdate();
+                    pst.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
