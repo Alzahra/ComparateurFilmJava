@@ -218,9 +218,8 @@ public class ModifInfCl extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 
 				if(c=='I') {
-					new InformationClient(null);
+					// Info valider TODO : mettre a jour
 					fen.dispose();
-					fenancienne.dispose();
 				}if (c=='R')
 					fen.dispose();
 			}

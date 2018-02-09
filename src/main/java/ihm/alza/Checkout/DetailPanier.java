@@ -28,7 +28,7 @@ public class DetailPanier extends JDialog {
 		this.setVisible(true);		
 	}
 
-	public class PannPanier extends JPanel{
+	public class PannPanier extends JPanel {
 
 		public PannPanier() {
 			//Apres reflexion, je pense qu'il faut faire une JTable puisque c'est un retour de requete BDD non ?

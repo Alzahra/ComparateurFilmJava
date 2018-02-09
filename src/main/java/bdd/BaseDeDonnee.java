@@ -45,32 +45,9 @@ public class BaseDeDonnee {
 		return bdd;
 	}
 
-
 	public void createTable(Table t, String csv) {
 		t.create(csv);
 	}
-
-	/*
-	public void addFromCSV(String path, String table) {
-		try{
-			Csv csv = new Csv();
-			csv.setFieldSeparatorRead('|');
-			csv.setCaseSensitiveColumnNames(true);
-			ResultSet rs = csv.read(path, null, null);
-			ResultSetMetaData meta = rs.getMetaData();
-			while (rs.next()) {
-				for (int i = 0; i < meta.getColumnCount(); i++) {
-					System.out.println(
-							meta.getColumnLabel(i + 1) + ": " +
-									rs.getString(i + 1));
-				}
-				System.out.println();
-			}
-			rs.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	} */
 
 	/**
 	 * Permet d'executer une action simple sur la BDD (sans paramètre ni retour)
@@ -84,13 +61,5 @@ public class BaseDeDonnee {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-	static public void main(String[] args) {
-		//baseDeDonnee.ajouter(new Film(1, "Mr Bean", 160, 7.8f, 20, new Date(Date.valueOf("1994-6-10").getTime()),
-		//		"drole", "Mr bean par en vacs :D", new String[]{"Le magnifique", "lul"}));
-
-		//for (Film f : baseDeDonnee.getFilms())
-		//	System.out.println(f);
 	}
 }

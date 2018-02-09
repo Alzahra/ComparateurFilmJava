@@ -71,7 +71,7 @@ public class BarreConnectionsInfos extends JPanel {
             JButton compte = new JButton("Mon compte");
             compte.addActionListener(e -> {
                 if (UserInfo.getInstance().getUser().getRole().equals("admin"))
-                    new InformationAdmin();
+                    new InformationAdmin(null);
                 else
                     new InformationClient(null);
             });

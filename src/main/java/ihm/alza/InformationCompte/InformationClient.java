@@ -205,7 +205,7 @@ public class InformationClient extends JDialog {
 					new ModifInfCl(null, InformationClient.this);
 				}
 				if (c=='M' )//Modif Mdp
-					new ChangerMdp('C');
+					new ChangerMdp(null,'C');
 				if (c=='S' )//Supprimer
 					new SuppressionCompte();
 				if (c=='R' ) {

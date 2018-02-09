@@ -21,6 +21,6 @@ public class SuppressionCompte {
 	        "Valider Suppression de Compte", 
 	        JOptionPane.CANCEL_OPTION
 	    );
-		
+		// TODO : Fermer et tt mettre a jour (déconnecter l'utilisateur désormais inexistant)
 	}
 }
