@@ -41,7 +41,7 @@ public class BarreRecherche extends JPanel {
         c.gridx = 0;
         add(new JLabel("Genre :"), c);
         genre = new JComboBox<>(new String[]{
-                "", "Comique", "Fantastique", "Policier"
+                "", "Comique", "Aventure", "Thriller", "Animation"
         });
         c.gridx = 1;
         add(genre, c);
@@ -49,7 +49,7 @@ public class BarreRecherche extends JPanel {
         c.gridx = 2;
         add(new JLabel("Durée :"), c);
         duree = new JComboBox<>(new String[]{
-                "< 180", "180 - 240", "> 240"
+                "< 40", "40 - 90", "> 90"
         });
         c.gridx = 3;
         add(duree, c);
@@ -90,13 +90,13 @@ public class BarreRecherche extends JPanel {
         //"< 180", "180 - 240", "> 240"
         switch (duree.getSelectedIndex()) {
             case 0:
-                c.add(new CritereDuree(0, 180));
+                c.add(new CritereDuree(0, 40));
                 break;
             case 1:
-                c.add(new CritereDuree(180, 240));
+                c.add(new CritereDuree(40, 90));
                 break;
             case 2:
-                c.add(new CritereDuree(240, 10000));
+                c.add(new CritereDuree(90, 10000));
                 break;
         }
 
