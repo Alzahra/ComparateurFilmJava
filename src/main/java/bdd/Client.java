@@ -6,20 +6,20 @@ import java.sql.Date;
 import java.util.HashMap;
 
 /**
- * TODO : certainement d'autres fonctions à ajouter
- * - debiter(montant)
- * - crediter(montant)
- * - ajouterFilm(Film)
- * - supprimerFilm(Film)
+ * Représente un client, c'est à dire qu'il n'a pas les droits
+ * d'un administrateur.
  */
 public class Client extends Utilisateur {
     private float solde;
-    private HashMap<Film, Date> films; // Un film a une date de péremption x)
+    /**
+     * La date correspond à la fin de la location du film
+     */
+    private HashMap<Film, Date> films;
 
     /**
      * Permet d'obtenir les films que loue un client avec les dates
-     * de fin de location, au format adapté pour le stockage dans la BDD
-     * @param c le client auquel on va vérifier s'il a des films loués
+     * de fin de location dans un format adapté pour le stockage dans la BDD.
+     * @param c le client, on va vérifier s'il a des films loués
      * @return une chaine de caractères formaté pour la BDD
      */
     static String formatFilmsForBDD(Client c) {
@@ -33,7 +33,7 @@ public class Client extends Utilisateur {
     /**
      * Permet d'obtenir une Map de film avec leur date de fin de location
      * correspondante, et ce à partir d'une chaine de caractère formaté
-     * venant de la BDD
+     * venant de la BDD.
      * @param f la chaine de caractère formaté venant de la BDD
      * @param tFilm la table des films permettant d'avoir toutes les informations des films loués
      * @return la Map ayant pour clé un film et pour valeur la date de fin de location
@@ -83,5 +83,15 @@ public class Client extends Utilisateur {
 
     public void setFilms(HashMap<Film, Date> films) {
         this.films = films;
+    }
+
+    public void addFilm(Film f) {
+        if (!films.containsKey(f))
+            films.put(f, new Date(0));
+    }
+
+    public void deleteFilm(Film f) {
+        if (films.containsKey(f))
+            films.remove(f);
     }
 }

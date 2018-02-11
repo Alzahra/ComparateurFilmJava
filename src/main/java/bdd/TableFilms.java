@@ -6,6 +6,12 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Représente une table de la base de donnée.
+ * Cette table contient tous les champs nécessaire au stockage
+ * des caractèristiques d'un film.
+ * Elle fournit aussi les interfaces permettant de gérer cette table.
+ */
 public class TableFilms extends Table {
     private static TableFilms instance = null;
 

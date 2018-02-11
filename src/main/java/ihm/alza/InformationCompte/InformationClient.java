@@ -1,5 +1,6 @@
 package ihm.alza.InformationCompte;
 
+import core.UserInfo;
 import ihm.alza.ModifCompte.ChangerMdp;
 import ihm.alza.ModifCompte.SuppressionCompte;
 import ihm.alza.Paiement.Rechargement;
@@ -25,6 +26,10 @@ public class InformationClient extends JDialog {
 		this.setContentPane(centre);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.setVisible(true);		
+	}
+
+	public void refresh() {
+		centre.refreshInfos();
 	}
 
 	public class PannInfCl extends JPanel{
@@ -190,6 +195,14 @@ public class InformationClient extends JDialog {
 			p.add(retour,gbc);
 			retour.addActionListener(new ClientAcLis('F')); //inutile en soit, peut etre regrouper
 			this.add(p);
+
+			refreshInfos();
+		}
+
+		public void refreshInfos() {
+			prenom.setText(UserInfo.getInstance().getUser().getPrenom());
+			nom.setText(UserInfo.getInstance().getUser().getNom());
+			mail.setText(UserInfo.getInstance().getUser().getEmail());
 		}
 
 		class ClientAcLis implements ActionListener {

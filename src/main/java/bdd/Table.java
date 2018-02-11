@@ -58,5 +58,10 @@ abstract class Table {
         }
     }
 
+    /**
+     * Fonction dépendante du type de table.
+     * Permet d'ajouter des entrées à la table via un fichier CSV.
+     * @param path le chemin du fichier CSV
+     */
     abstract public void addFromCSV(String path);
 }

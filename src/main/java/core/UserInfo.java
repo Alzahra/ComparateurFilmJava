@@ -47,4 +47,7 @@ public class UserInfo {
         return prix;
     }
 
+    public ArrayList<Film> getPanier() {
+        return panier;
+    }
 }

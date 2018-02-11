@@ -1,1 +1,11 @@
 bdd
+core
+core.Criteres
+ihm.alza.Checkout
+ihm.alza.InformationCompte
+ihm.alza.InscriConnex
+ihm.alza.ModifCompte
+ihm.alza.Paiement
+ihm.alza.PannAdmin
+ihm.main
+ihm.utils

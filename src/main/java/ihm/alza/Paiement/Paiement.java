@@ -1,5 +1,9 @@
 package ihm.alza.Paiement;
 
+import bdd.Client;
+import bdd.Film;
+import bdd.TableUtilisateurs;
+import core.UserInfo;
 import ihm.alza.Checkout.DetailPanier;
 
 import java.awt.*;
@@ -144,6 +148,10 @@ public class Paiement extends JDialog {
 				if (c=='F') {
 //				if(verifmontant()) new InformationClient(); //affiche film loue
 //				else new PaiementRefuse();
+					Client c = (Client)UserInfo.getInstance().getUser();
+					for (Film f : UserInfo.getInstance().getPanier())
+						c.addFilm(f);
+					TableUtilisateurs.getInstance().modifier(c, "nope");
 					dispose();
 				}if (c=='A') {
 					dispose();

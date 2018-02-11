@@ -74,7 +74,7 @@ public class TableUtilisateurs extends Table {
 
     public void modifier(Utilisateur user, String pwd) {
         try {
-            PreparedStatement pst = BaseDeDonnee.getInstance().getConnection().prepareStatement("UPDATE utilisateurs" +
+            PreparedStatement pst = BaseDeDonnee.getInstance().getConnection().prepareStatement("UPDATE utilisateurs " +
                     "SET nom=?," +
                     "prenom=?," +
                     "pseudo=?," +
@@ -82,8 +82,8 @@ public class TableUtilisateurs extends Table {
                     "solde=?," +
                     "role=?," +
                     "films_loue=?," +
-                    "pwd=?" +
-                    "WHERE id = ?;");
+                    //"pwd=?" +
+                    "WHERE id = ?");
             pst.setString(1, user.getNom());
             pst.setString(2, user.getPrenom());
             pst.setString(3, user.getPseudo());
@@ -97,8 +97,8 @@ public class TableUtilisateurs extends Table {
                 pst.setString(7, "");
             }
             pst.setString(6, user.getRole());
-            pst.setString(8, pwd);
-            pst.setInt(9, user.getId());
+            //pst.setString(8, pwd);
+            pst.setInt(8, user.getId());
             pst.executeUpdate();
             pst.close();
         } catch (SQLException e) {
@@ -198,6 +198,8 @@ public class TableUtilisateurs extends Table {
                         case "pwd":
                             pwd = rs.getString(i + 1);
                             break;
+                        case "role":
+                            role = rs.getString(i + 1);
                     }
                 }
 

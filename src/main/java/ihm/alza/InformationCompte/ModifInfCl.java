@@ -1,5 +1,8 @@
 package ihm.alza.InformationCompte;
 
+import bdd.Client;
+import core.UserInfo;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -218,7 +221,14 @@ public class ModifInfCl extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 
 				if(c=='I') {
-					// Info valider TODO : mettre a jour
+					Client c = (Client)UserInfo.getInstance().getUser();
+					if (!prenom.getText().isEmpty())
+						c.setPrenom(prenom.getText());
+					if (!nom.getText().isEmpty())
+						c.setNom(nom.getText());
+					if (!mail.getText().isEmpty())
+						c.setEmail(mail.getText());
+					fenancienne.refresh();
 					fen.dispose();
 				}if (c=='R')
 					fen.dispose();

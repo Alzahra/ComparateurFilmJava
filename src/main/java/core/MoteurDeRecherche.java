@@ -4,8 +4,7 @@ import bdd.*;
 import core.Criteres.Critere;
 import ihm.main.Principale;
 
-import javax.swing.*;
-import java.lang.annotation.Native;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -51,6 +50,8 @@ public class MoteurDeRecherche {
     }
 
     public static void main(String[] args) {
+        Principale fenPrincipale = new Principale("Comparateur Film", new MoteurDeRecherche());
+
         BaseDeDonnee bdd = BaseDeDonnee.getInstance();
         TableFilms tf = TableFilms.getInstance();
         TableUtilisateurs tu = TableUtilisateurs.getInstance();
@@ -58,10 +59,11 @@ public class MoteurDeRecherche {
         // On repart à chaque fois d'une BDD neuve pour l'instant
         // Pas de sauvegarde des modifications des tables
         tf.destroy(); tu.destroy();
-        bdd.createTable(tf, "./films.csv");
-        bdd.createTable(tu, null);
+        //ClassLoader classLoader = getClass().getClassLoader();
+        //new File(classLoader.getResource("images/visa.jpeg").getFile())
+        bdd.createTable(tf, "films.csv");
+        bdd.createTable(tu, "users.csv");
 
-        Principale fenPrincipale = new Principale("Comparateur Film", new MoteurDeRecherche());
         /*
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

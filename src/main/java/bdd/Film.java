@@ -3,6 +3,9 @@ package bdd;
 import java.sql.Date;
 import java.util.Arrays;
 
+/**
+ * Représente un film, contient ses différents caractèristiques.
+ */
 public class Film {
     private final int id;
     private String titre;
@@ -10,7 +13,7 @@ public class Film {
     private float note;
     private float prix;
     private Date dateSortie;
-    private String genre; // TODO : je sais plus si on a un seul genre par film ou plusieurs (du coup mettre une list)
+    private String genre;
     private String synopsis;
     private String[] acteurs;
 

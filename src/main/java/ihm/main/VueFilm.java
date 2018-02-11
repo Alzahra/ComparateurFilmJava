@@ -3,6 +3,7 @@ package ihm.main;
 import bdd.Film;
 import bdd.Utilisateur;
 import core.UserInfo;
+import ihm.alza.Checkout.ContinuerAchat;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,13 +21,13 @@ public class VueFilm extends JPanel {
         gc.gridx = 0;
         add(new JLabel(f.getTitre()), gc);
         gc.gridx = 1;
-        add(new JLabel(new Integer(f.getDuree()).toString()), gc);
+        add(new JLabel(new Integer(f.getDuree()).toString() + " min"), gc);
         gc.gridx = 2;
         add(new JLabel(f.getGenre()), gc);
         gc.gridx = 3;
-        add(new JLabel(new Float(f.getNote()).toString()), gc);
+        add(new JLabel(new Float(f.getNote()).toString() + "/10"), gc);
         gc.gridx = 4;
-        add(new JLabel(new Float(f.getPrix()).toString()), gc);
+        add(new JLabel(new Float(f.getPrix()).toString() + "€"), gc);
 
         JButton b = new JButton("Détails");
         b.addActionListener(e -> c.toggleExtraInfos(f));
@@ -39,6 +40,7 @@ public class VueFilm extends JPanel {
             if(UserInfo.getInstance().isConnected()) {
                 if (u.getRole().equals("user")) {
                     UserInfo.getInstance().ajouterPanier(f);
+                    //new ContinuerAchat(null);
                 }
             }
         });

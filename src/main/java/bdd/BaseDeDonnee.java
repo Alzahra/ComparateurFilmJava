@@ -6,7 +6,10 @@ import java.sql.*;
 import java.util.HashMap;
 
 /**
- * TODO : mettre a jour les expirations de location de film (à chaque lancement ?)
+ * Class de type singleton.
+ * Elle prend en charge la gestion global de la base de donnée.
+ * A savoir la création de celle-ci, la gestion des requêtes et
+ * la création des tables qui la compose.
  */
 public class BaseDeDonnee {
 	private Connection bdd;
@@ -19,6 +22,9 @@ public class BaseDeDonnee {
 		return instance;
 	}
 
+	/**
+	 *
+	 */
 	private BaseDeDonnee() {
 		try {
 			Class.forName("org.h2.Driver"); // On charge le module H2
@@ -37,14 +43,20 @@ public class BaseDeDonnee {
 	}
 
 	/**
-	 * Retourne la connection à la BDD
-	 * TODO : devrait être enlevé et prévoir des méthodes qui permettent une certaines abstraction (cf. execute())
-	 * @return
+	 * Retourne une connection à la base de donnée.
+	 * Permet d'effectuer des requêtes complexes
+	 * (des requêtes qui requiert une préparation).
+	 * @return connexion à la base de donnée
 	 */
 	public Connection getConnection() {
 		return bdd;
 	}
 
+	/**
+	 * Crée une table dans la base de donnée
+	 * @param t la table à créer
+	 * @param csv (facultatif) le fichier csv contenant des entrées pour la table
+	 */
 	public void createTable(Table t, String csv) {
 		t.create(csv);
 	}
